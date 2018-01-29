@@ -15,5 +15,6 @@ if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.
   if ($payload->ref == 'refs/heads/master') {
     exec('git pull 2>&1');
   }
+} else {
+  echo "didn't run git pull.";
 }
-exec('git pull 2>&1');
