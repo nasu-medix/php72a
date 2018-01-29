@@ -10,7 +10,7 @@ $header     = getallheaders();
 $post_data  = file_get_contents('php://input');
 $hmac       = hash_hmac('sha1', $post_data, $SECRET_KEY);
 
-if (isset($header['X-Hub-Signature'] && $header['X-Hub-Signature'] === 'sha1='.$hmac)) {
+if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.$hmac)) {
   $payload = json_decode($post_data, true);
   if ($payload->ref == 'refs/heads/master') {
     exec('git pull 2>&1');
