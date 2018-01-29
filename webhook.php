@@ -15,7 +15,7 @@ file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." access start: ".$_SERVER['R
 
 if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.$hmac) {
   $payload = json_decode($post_data, true);
-  file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." payload: ".$payload."\n", FILE_APPEND|LOCK_EX);
+  file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." payload->ref: ".$payload->ref."\n", FILE_APPEND|LOCK_EX);
   if ($payload->ref == 'refs/heads/master') {
     exec('git pull');
     file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." ".$_SERVER['REMOTE_ADDR']." git pulled: ".$payload['after']." ".$payload['commits'][0]['message']."\n", FILE_APPEND|LOCK_EX);
