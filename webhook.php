@@ -15,6 +15,6 @@ if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.
   $payload = json_decode($post_data, true);
   if ($payload['ref'] == 'refs/heads/master') {
     exec('git pull', $output);
-    file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." ".$payload['ref']." git pulled: ".$payload['after']." ".$payload['commits'][0]['message']. " : " .$output . "\n", FILE_APPEND|LOCK_EX);
+    file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." ".$payload['ref']." git pulled: ".$payload['after']." ".$payload['commits'][0]['message']. " : " .$output[0] . "\n", FILE_APPEND|LOCK_EX);
   }
 }
