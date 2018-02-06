@@ -12,6 +12,7 @@ $hmac       = hash_hmac('sha1', $post_data, $SECRET_KEY);
 
 if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.$hmac) {
   $payload = json_decode($post_data, true);
+  file_put_contents($LOG_FILE, $payload['ref']."\n", FILE_APPEND|LOCK_EX);
   if ($payload['ref'] == 'refs/heads/master') {
     exec('cd && git pull 2>&1', $output, $return_var);
     file_put_contents($LOG_FILE, "$output: ". $output . " $return_var: ". $return_var . " git pulled: ".$payload['after']." ".$payload['commits'][0]['message']."\n", FILE_APPEND|LOCK_EX);
