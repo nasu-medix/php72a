@@ -17,4 +17,5 @@ if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.
     exec('cd && git pull 2>&1', $output, $return_var);
     file_put_contents($LOG_FILE, "$output: ". $output . " $return_var: ". $return_var . " git pulled: ".$payload['after']." ".$payload['commits'][0]['message']."\n", FILE_APPEND|LOCK_EX);
   }
+  var_dump($payload);
 }
