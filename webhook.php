@@ -4,7 +4,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
   header('Location: https:/google.co.jp');
   exit;
 }
-
+$LOG_FILE   = dirname(__FILE__).'/hook.log';
 $SECRET_KEY = 'test.iprimo';
 $header     = getallheaders();
 $post_data  = file_get_contents('php://input');
@@ -14,5 +14,6 @@ if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.
   $payload = json_decode($post_data, true);
   if ($payload['ref'] == 'refs/heads/master') {
     exec('cd && git pull 2>&1', $output, $return_var);
+    file_put_contents($LOG_FILE, "$output: ". $output . " $return_var: ". $return_var . " git pulled: ".$payload['after']." ".$payload['commits'][0]['message']."\n", FILE_APPEND|LOCK_EX);
   }
 }
