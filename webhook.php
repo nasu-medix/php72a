@@ -14,5 +14,6 @@ if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.
   if ($payload['ref'] == 'refs/heads/master') {
     exec('cd && git pull 2>&1', $output, $return_var);
     var_dump($output);
+    var_dump($return_var);
   }
 }
