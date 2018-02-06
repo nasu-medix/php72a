@@ -12,7 +12,7 @@ $hmac       = hash_hmac('sha1', $post_data, $SECRET_KEY);
 if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.$hmac) {
   $payload = json_decode($post_data, true);
   if ($payload['ref'] == 'refs/heads/master') {
-    exec('ls -al', $output, $return_var);
+    exec('cd && git pull 2>&1', $output, $return_var);
     var_dump($output);
   }
 }
