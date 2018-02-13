@@ -15,7 +15,6 @@ if (isset($header['X-Hub-Signature']) && $header['X-Hub-Signature'] === 'sha1='.
     exec('id 2>&1', $output, $return_var);
     var_dump($output);
     $process = proc_open("su - root -c git pull", [["pipe", "r"], ["pipe", "w"]], $pipes);
-    var_dump($process);
     if (is_resource($process)) {
       fwrite($pipes[0], 'password');
       $cmd_result = stream_get_contents($pipes[1]);
